@@ -44,7 +44,6 @@ $(MINILIBX):
 # Clean objects
 clean:
 	$(MAKE) -C $(LIBDIR) clean
-	$(MAKE) -C $(MINILIBXDIR) clean
 	rm -f $(OBJS)
 
 # Clean executable and objects
