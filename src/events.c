@@ -1,33 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   window.c                                           :+:      :+:    :+:   */
+/*   events.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alejandj <alejandj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/22 14:10:52 by alejandj          #+#    #+#             */
-/*   Updated: 2026/04/24 13:51:51 by alejandj         ###   ########.fr       */
+/*   Created: 2026/04/24 13:24:57 by alejandj          #+#    #+#             */
+/*   Updated: 2026/04/24 13:51:59 by alejandj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-int	create_window(t_cub *cub)
+int	handle_key(int keycode, void *param)
 {
-	cub->mlx = mlx_init();
-	if (!cub->mlx)
-		return (1);
-	cub->win = mlx_new_window(cub->mlx, WIDTH, HEIGHT, "Cub3d");
-	if (!cub->win)
-		return (1);
-	return (0);
-}
+	t_cub	*cub;
 
-int	close_window(t_cub *cub)
-{
-	mlx_destroy_window(cub->mlx, cub->win);
-	mlx_destroy_display(cub->mlx);
-	free(cub->mlx);
-	free_cub(cub);
-	exit(0);
+	cub = (t_cub *)param;
+	if (keycode == 65307)
+		close_window(cub);
+	return (0);
 }

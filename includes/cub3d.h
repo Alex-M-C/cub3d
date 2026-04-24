@@ -6,21 +6,21 @@
 /*   By: alejandj <alejandj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/22 13:53:10 by alejandj          #+#    #+#             */
-/*   Updated: 2026/04/22 14:44:57 by alejandj         ###   ########.fr       */
+/*   Updated: 2026/04/24 13:48:07 by alejandj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
-#include "../libft/libft.h"
-#include "../minilibx-linux/mlx.h"
-#include <stddef.h>
-#include <stdlib.h>
-#include <fcntl.h>
+# include "../libft/libft.h"
+# include "../minilibx-linux/mlx.h"
+# include <stddef.h>
+# include <stdlib.h>
+# include <fcntl.h>
 
-#define WIDTH 800
-#define HEIGHT 600
+# define WIDTH 800
+# define HEIGHT 600
 
 typedef struct s_map
 {
@@ -28,7 +28,7 @@ typedef struct s_map
 	int		height;
 	int		width;
 	int		player_count;
-}   t_map;
+}			t_map;
 
 typedef struct s_cub
 {
@@ -63,6 +63,10 @@ int		parse_element(char *line, t_cub *cub);
 
 // window.c
 int		create_window(t_cub *cub);
+int		close_window(t_cub *cub);
+
+// events.c
+int		handle_key(int keycode, void *param);
 
 // cub3d_utils.c
 void	free_cub(t_cub *cub);

@@ -6,7 +6,7 @@
 /*   By: alejandj <alejandj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/22 13:53:59 by alejandj          #+#    #+#             */
-/*   Updated: 2026/04/22 14:58:01 by alejandj         ###   ########.fr       */
+/*   Updated: 2026/04/24 13:51:29 by alejandj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,10 @@ static void	run_game(t_cub *cub)
 	}
 	
 	ft_printf("Map and config loaded successfully! Starting game...\n");
+	mlx_key_hook(cub->win, handle_key, cub);
+	mlx_hook(cub->win, 17, 0, close_window, cub);
 	mlx_loop(cub->mlx);
 }
-
 
 int	main(int argc, char **argv)
 {
@@ -74,10 +75,10 @@ int	main(int argc, char **argv)
 	init_cub(&cub);
 	parse_file(fd, &cub);
 	close(fd);
-    pad_map(&cub);
+	pad_map(&cub);
 	validate_cub_map(&cub);
 	run_game(&cub);
-    print_cub_debug(&cub);
-    free_cub(&cub);
+	print_cub_debug(&cub);
+	free_cub(&cub);
 	return (0);
 }

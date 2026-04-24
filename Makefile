@@ -13,7 +13,8 @@ SRCS		= src/main.c				\
 			  src/set_visuals.c			\
 			  src/cub3d_utils.c			\
 			  src/debug.c				\
-			  src/window.c				
+			  src/window.c				\
+			  src/events.c
 
 OBJS		= $(SRCS:.c=.o)
 
