@@ -13,11 +13,13 @@
 #include "../includes/cub3d.h"
 
 /*
-** Extracts the texture path.
+** Extracts the texture path and verifies that the file actually exists and is readable.
 */
 static int	extract_texture(char **path, char *line)
 {
-	int	i;
+	int		i;
+	int		fd;
+	char	*temp_path;
 
 	if (*path != NULL)
 		return (0);
@@ -26,7 +28,17 @@ static int	extract_texture(char **path, char *line)
 		i++;
 	if (line[i] == '\0')
 		return (0);
-	*path = ft_strdup(&line[i]);
+	temp_path = ft_strdup(&line[i]);
+	if (!temp_path)
+		return (0);		
+	fd = open(temp_path, O_RDONLY);
+	if (fd == -1)
+	{
+		free(temp_path);
+		return (0);
+	}
+	close(fd);
+	*path = temp_path;
 	return (1);
 }
 

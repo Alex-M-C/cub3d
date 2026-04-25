@@ -39,5 +39,10 @@ void	print_cub_debug(t_cub *cub)
 		printf("|%s|\n", cub->map.grid[i]);
 		i++;
 	}
+	printf("==========================\n\n");
+	printf("=== PLAYER INFO ===\n");
+	printf("Position: (%f, %f)\n", cub->player.x, cub->player.y);
+	printf("Direction: (%f, %f)\n", cub->player.dir_x, cub->player.dir_y);
+	printf("Plane: (%f, %f)\n", cub->player.plane_x, cub->player.plane_y);
 	printf("==========================\n");
 }

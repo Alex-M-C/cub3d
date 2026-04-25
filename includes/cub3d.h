@@ -30,18 +30,29 @@ typedef struct s_map
 	int		player_count;
 }			t_map;
 
+typedef struct s_player
+{
+	double	x;
+	double	y;
+	double	dir_x;
+	double	dir_y;
+	double	plane_x;
+	double	plane_y;
+}	t_player;
+
 typedef struct s_cub
 {
-	char	*no_path;
-	char	*so_path;
-	char	*we_path;
-	char	*ea_path;
-	int		floor_color;
-	int		ceiling_color;
-	int		elements_found; // Tracks if we hit the magic number 6
-	t_map	map;
-	void	*mlx;
-	void	*win;
+	char		*no_path;
+	char		*so_path;
+	char		*we_path;
+	char		*ea_path;
+	int			floor_color;
+	int			ceiling_color;
+	int			elements_found; // Tracks if we hit the magic number 6
+	t_map		map;
+	t_player	player;
+	void		*mlx;
+	void		*win;
 }	t_cub;
 
 // debug.c (Must erase at end)

@@ -28,12 +28,17 @@ static void	init_cub(t_cub *cub)
 	cub->map.width = 0;
 	cub->map.height = 0;
 	cub->map.player_count = 0;
+	cub->player.x = 0.0;
+	cub->player.y = 0.0;
+	cub->player.dir_x = 0.0;
+	cub->player.dir_y = 0.0;
+	cub->player.plane_x = 0.0;
+	cub->player.plane_y = 0.0;
 }
 
 /*
 ** Placeholder for where raycasting logic begins.
 */
-
 static void	run_game(t_cub *cub)
 {
 	// 1. Initialize mlx: cub->mlx = mlx_init();
