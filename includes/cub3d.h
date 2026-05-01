@@ -6,7 +6,7 @@
 /*   By: alejandj <alejandj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/22 13:53:10 by alejandj          #+#    #+#             */
-/*   Updated: 2026/04/30 14:14:55 by alejandj         ###   ########.fr       */
+/*   Updated: 2026/05/01 20:38:08 by alejandj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,19 @@
 # define WIDTH 800
 # define HEIGHT 600
 # define TILE_SIZE 16
-# define MOVE_SPEED 0.05
+
+# define MOVE_SPEED 0.02
+# define ROT_SPEED 0.009
+
+# define ESC 65307
 
 # define KEY_W 119
 # define KEY_A 97
 # define KEY_S 115
 # define KEY_D 100
+
+# define LEFT_KEY 65361 
+# define RIGHT_KEY 65363
 
 
 typedef struct s_map
@@ -98,6 +105,8 @@ typedef struct s_keys
 	int		a;
 	int		s;
 	int		d;
+	int		left;
+	int		right;
 }			t_keys;
 
 typedef struct s_cub
