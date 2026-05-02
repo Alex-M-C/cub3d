@@ -6,7 +6,7 @@
 /*   By: alejandj <alejandj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/22 13:53:59 by alejandj          #+#    #+#             */
-/*   Updated: 2026/04/30 13:44:12 by alejandj         ###   ########.fr       */
+/*   Updated: 2026/05/02 19:25:35 by alejandj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,12 @@ static void	init_cub(t_cub *cub)
 	cub->player.dir_y = 0.0;
 	cub->player.plane_x = 0.0;
 	cub->player.plane_y = 0.0;
+	cub->keys.w = 0;
+	cub->keys.a = 0;
+	cub->keys.s = 0;
+	cub->keys.d = 0;
+	cub->keys.left = 0;
+	cub->keys.right = 0;
 }
 
 /*
