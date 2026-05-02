@@ -6,7 +6,7 @@
 /*   By: alejandj <alejandj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/24 13:24:57 by alejandj          #+#    #+#             */
-/*   Updated: 2026/05/01 22:55:21 by alejandj         ###   ########.fr       */
+/*   Updated: 2026/05/02 20:54:49 by alejandj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,28 +54,49 @@ int	handle_key_release(int keycode, void *param)
 	return (0);
 }
 
+static void	handle_colision(t_cub *cub, double next_x, double next_y)
+{
+	if (cub->map.grid[(int)cub->player.y][(int)next_x] != '1')
+		cub->player.x = next_x;
+	if (cub->map.grid[(int)next_y][(int)cub->player.x] != '1')
+		cub->player.y = next_y;
+}
+
 static int	move_player(t_cub *cub)
 {
+	double next_x;
+	double next_y;
+
+	next_x = 0;
+	next_y = 0;
 	if (cub->keys.w)
-		return (
-			cub->player.x += cub->player.dir_x * MOVE_SPEED,
-			cub->player.y += cub->player.dir_y * MOVE_SPEED, 1
-		);
+	{
+		next_x = cub->player.x + cub->player.dir_x * MOVE_SPEED;
+		next_y = cub->player.y + cub->player.dir_y * MOVE_SPEED;
+		handle_colision(cub, next_x, next_y);
+		return (1);
+	}
 	if (cub->keys.a)
-		return (
-			cub->player.x -= cub->player.plane_x * MOVE_SPEED,
-			cub->player.y -= cub->player.plane_y * MOVE_SPEED, 1
-		);
+	{
+		next_x = cub->player.x - cub->player.plane_x * MOVE_SPEED;
+		next_y = cub->player.y - cub->player.plane_y * MOVE_SPEED;
+		handle_colision(cub, next_x, next_y);
+		return (1);
+	}
 	if (cub->keys.s)
-		return (
-			cub->player.x -= cub->player.dir_x * MOVE_SPEED,
-			cub->player.y -= cub->player.dir_y * MOVE_SPEED, 1
-		);
+	{
+		next_x = cub->player.x - cub->player.dir_x * MOVE_SPEED;
+		next_y = cub->player.y - cub->player.dir_y * MOVE_SPEED;
+		handle_colision(cub, next_x, next_y);
+		return (1);
+	}
 	if (cub->keys.d)
-		return (
-			cub->player.x += cub->player.plane_x * MOVE_SPEED,
-			cub->player.y += cub->player.plane_y * MOVE_SPEED, 1
-		);
+	{
+		next_x = cub->player.x + cub->player.plane_x * MOVE_SPEED;
+		next_y = cub->player.y + cub->player.plane_y * MOVE_SPEED;
+		handle_colision(cub, next_x, next_y);
+		return (1);
+	}
 	return (0);
 }
 
@@ -114,7 +135,13 @@ int	handle_move(void *param)
 	t_cub	*cub;
 
 	cub = (t_cub *)param;
-	if (move_player(cub) || move_chamera(cub))
+	if (move_player(cub))
+	{
+		mlx_clear_window(cub->mlx, cub->win);
+		draw_2d_map(cub);
+		raycast_loop(cub);
+	}
+	if (move_chamera(cub))
 	{
 		mlx_clear_window(cub->mlx, cub->win);
 		draw_2d_map(cub);
