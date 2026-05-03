@@ -137,14 +137,14 @@ int	handle_move(void *param)
 	cub = (t_cub *)param;
 	if (move_player(cub))
 	{
-		mlx_clear_window(cub->mlx, cub->win);
-		draw_2d_map(cub);
+		//mlx_clear_window(cub->mlx, cub->win);
+		//draw_2d_map(cub);
 		raycast_loop(cub);
 	}
 	if (move_chamera(cub))
 	{
-		mlx_clear_window(cub->mlx, cub->win);
-		draw_2d_map(cub);
+		//mlx_clear_window(cub->mlx, cub->win);
+		//draw_2d_map(cub);
 		raycast_loop(cub);
 	}
 	return (0);

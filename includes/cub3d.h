@@ -23,8 +23,14 @@
 # define WIDTH 800
 # define HEIGHT 600
 # define TILE_SIZE 16
+# define TEX_HEIGHT 64
+# define TEX_WIDTH 64
+# define NO 0
+# define SO 1
+# define EA 2
+# define WE 3
 
-# define MOVE_SPEED 0.02
+# define MOVE_SPEED 0.03
 # define ROT_SPEED 0.009
 
 # define ESC 65307
@@ -55,6 +61,28 @@ typedef struct s_player
 	double	plane_x;
 	double	plane_y;
 }			t_player;
+
+typedef struct s_draw
+{
+	int		line_height;
+	int		draw_start;
+	int		draw_end;
+	double	step;
+	double	tex_pos;
+	int		tex_x;
+	int		tex_y;
+}	t_draw;
+
+typedef struct s_img
+{
+	void	*img_ptr;       // The pointer to the loaded image
+	char	*addr;          // The raw memory address of the pixels
+	int		width;          // Texture width (e.g., 64)
+	int		height;         // Texture height (e.g., 64)
+	int		bpp;            // Bits per pixel
+	int		line_length;    // How many bytes are in a single row of the image
+	int		endian;
+}   t_img;
 
 // Ray info
 typedef struct s_ray
@@ -111,6 +139,7 @@ typedef struct s_keys
 
 typedef struct s_cub
 {
+	t_img		screen;
 	char		*no_path;
 	char		*so_path;
 	char		*we_path;
@@ -120,6 +149,7 @@ typedef struct s_cub
 	int			elements_found; // Tracks if we hit the magic number 6
 	t_map		map;
 	t_player	player;
+	t_img		textures[4]; // 0: North, 1: South, 2: East, 3: West
 	void		*mlx;
 	void		*win;
 	t_keys		keys;
@@ -158,8 +188,12 @@ void	raycast_loop(t_cub *cub);
 void	draw_ray(t_cub *cub, t_ray *ray, int color);
 void	draw_2d_map(t_cub *cub);
 
+// render3d.c
+void	draw_vertical_line(t_cub *cub, t_ray *ray, int x);
+
 // cub3d_utils.c
 void	free_cub(t_cub *cub);
 void	err_exit(t_cub *cub, char *message);
+void	my_mlx_pixel_put(t_img *img, int x, int y, int color);
 
 #endif

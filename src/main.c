@@ -42,35 +42,52 @@ static void	init_cub(t_cub *cub)
 	cub->keys.right = 0;
 }
 
+static void load_texture(t_cub *cub, int index, char *path)
+{
+	cub->textures[index].img_ptr = mlx_xpm_file_to_image(cub->mlx, path, 
+										&cub->textures[index].width, 
+										&cub->textures[index].height);
+	if (!cub->textures[index].img_ptr)
+		err_exit(cub, "Error\nFailed to load texture");
+	cub->textures[index].addr = mlx_get_data_addr(cub->textures[index].img_ptr, 
+										&cub->textures[index].bpp, 
+										&cub->textures[index].line_length, 
+										&cub->textures[index].endian);
+}
+
 /*
-** Placeholder for where raycasting logic begins.
+** 1. Initialize mlx: cub->mlx = mlx_init();
+** 2. Open window: cub->win = mlx_new_window(...);
+** 3. Convert NO, SO, WE, EA paths into mlx images.
+** 4. Set up mlx_hook for keys (WASD, arrows, ESC).
+** 5. Start the render loop: mlx_loop_hook(...);
+** 6. mlx_loop(cub->mlx);
 */
 static void	run_game(t_cub *cub)
 {
-	// 1. Initialize mlx: cub->mlx = mlx_init();
-	// 2. Open window: cub->win = mlx_new_window(...);
-	// 3. Convert NO, SO, WE, EA paths into mlx images.
-	// 4. Set up mlx_hook for keys (WASD, arrows, ESC).
-	// 5. Start the render loop: mlx_loop_hook(...);
-	// 6. mlx_loop(cub->mlx);
-	
 	if (create_window(cub))
 	{
 		ft_printf("Error: can't create window\n");
 		return ;
 	}
-
+	cub->screen.img_ptr = mlx_new_image(cub->mlx, WIDTH, HEIGHT);
+	cub->screen.addr = mlx_get_data_addr(cub->screen.img_ptr, 
+										&cub->screen.bpp, 
+										&cub->screen.line_length, 
+										&cub->screen.endian);
+	load_texture(cub, NO, cub->no_path);
+	load_texture(cub, SO, cub->so_path);
+	load_texture(cub, EA, cub->ea_path);
+	load_texture(cub, WE, cub->we_path);
 	ft_printf("Map and config loaded successfully! Starting game...\n");
-	draw_2d_map(cub);
+	//draw_2d_map(cub);
 	raycast_loop(cub);
 	
 	// Events
 	mlx_hook(cub->win, 2, 1L << 0, handle_key_press, cub);
 	mlx_hook(cub->win, 3, 1L << 1, handle_key_release, cub);
 	mlx_hook(cub->win, 17, 0, close_window, cub);
-	
 	mlx_loop_hook(cub->mlx, handle_move, cub);
-	
 	mlx_loop(cub->mlx);
 }
 

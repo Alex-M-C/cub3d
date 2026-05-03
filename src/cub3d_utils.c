@@ -12,6 +12,21 @@
 
 #include "../includes/cub3d.h"
 
+static void destroy_img(t_cub *cub)
+{
+	int	j;
+
+	j = 0;
+	while (j < 4)
+	{
+		if (cub->textures[j].img_ptr)
+			mlx_destroy_image(cub->mlx, cub->textures[j].img_ptr);
+		j++;
+	}
+	if (cub->screen.img_ptr)
+		mlx_destroy_image(cub->mlx, cub->screen.img_ptr);
+}
+
 /*
 ** Safely frees all allocated memory inside the main structure.
 */
@@ -40,6 +55,8 @@ void	free_cub(t_cub *cub)
 		}
 		free(cub->map.grid);
 	}
+	if (cub->mlx)
+		destroy_img(cub);
 }
 
 /*
@@ -56,4 +73,14 @@ void	err_exit(t_cub *cub, char *message)
 	if (cub)
 		free_cub(cub);
 	exit(1);
+}
+
+void my_mlx_pixel_put(t_img *img, int x, int y, int color)
+{
+	char	*dst;
+
+	if (x < 0 || y < 0 || x >= WIDTH || y >= HEIGHT)
+		return ;
+	dst = img->addr + (y * img->line_length + x * (img->bpp / 8));
+	*(unsigned int*)dst = color;
 }

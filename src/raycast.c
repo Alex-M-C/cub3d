@@ -94,9 +94,11 @@ void	raycast_loop(t_cub *cub)
 		ray.hit_x = cub->player.x + (ray.ray_dir_x * ray.real_dist);
 		ray.hit_y = cub->player.y + (ray.ray_dir_y * ray.real_dist);
 
-		draw_ray(cub, &ray, 0xFF0000);
+		//draw_ray(cub, &ray, 0xFF0000);
+		draw_vertical_line(cub, &ray, i);
 
 		// 4. CALCULAR ALTURA DE LÍNEA Y DIBUJAR
 		// -> Aquí decides qué tan grande se ve el muro en el píxel 'i'.
 	}
+	mlx_put_image_to_window(cub->mlx, cub->win, cub->screen.img_ptr, 0, 0);
 }
