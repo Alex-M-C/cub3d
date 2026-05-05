@@ -6,7 +6,7 @@
 /*   By: alejandj <alejandj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/22 14:10:52 by alejandj          #+#    #+#             */
-/*   Updated: 2026/04/30 13:57:29 by alejandj         ###   ########.fr       */
+/*   Updated: 2026/05/05 18:48:50 by alejandj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ int	create_window(t_cub *cub)
 int	close_window(t_cub *cub)
 {
 	mlx_destroy_window(cub->mlx, cub->win);
+	free_cub(cub);
 	mlx_destroy_display(cub->mlx);
 	free(cub->mlx);
-	free_cub(cub);
 	exit(0);
 }
