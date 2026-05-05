@@ -1,16 +1,28 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   render3d.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alejandj <alejandj@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/05/05 19:13:02 by alejandj          #+#    #+#             */
+/*   Updated: 2026/05/05 19:17:08 by alejandj         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/cub3d.h"
 
-static int get_texture_pixel(t_img *tex, int x, int y)
+static int	get_texture_pixel(t_img *tex, int x, int y)
 {
-    char    *pixel;
-    int     color;
+	char	*pixel;
+	int		color;
 
-    pixel = tex->addr + (y * tex->line_length + x * (tex->bpp / 8));
-    color = *(unsigned int *)pixel;
-    return (color);
+	pixel = tex->addr + (y * tex->line_length + x * (tex->bpp / 8));
+	color = *(unsigned int *)pixel;
+	return (color);
 }
 
-static int get_wall_pixel_color(t_cub *cub, t_ray *ray, int tex_x, int tex_y)
+static int	get_wall_pixel_color(t_cub *cub, t_ray *ray, int tex_x, int tex_y)
 {
 	t_img	*tex;
 
@@ -25,7 +37,7 @@ static int get_wall_pixel_color(t_cub *cub, t_ray *ray, int tex_x, int tex_y)
 	return (get_texture_pixel(tex, tex_x, tex_y));
 }
 
-static int calculate_tex_x(t_ray *ray)
+static int	calculate_tex_x(t_ray *ray)
 {
 	double	wall_x;
 	int		tex_x;
@@ -51,9 +63,9 @@ static int calculate_tex_x(t_ray *ray)
 	return (tex_x);
 }
 
-static void init_draw_variables(t_draw *d, t_ray *ray)
+static void	init_draw_variables(t_draw *d, t_ray *ray)
 {
-    d->line_height = (int)(HEIGHT / ray->real_dist);
+	d->line_height = (int)(HEIGHT / ray->real_dist);
 	d->step = 1.0 * TEX_HEIGHT / d->line_height;
 	d->draw_start = (HEIGHT - d->line_height) / 2;
 	if (d->draw_start < 0)
@@ -61,7 +73,8 @@ static void init_draw_variables(t_draw *d, t_ray *ray)
 	d->draw_end = (HEIGHT + d->line_height) / 2;
 	if (d->draw_end >= HEIGHT)
 		d->draw_end = HEIGHT - 1;
-	d->tex_pos = (d->draw_start - HEIGHT / 2.0 + d->line_height / 2.0) * d->step;
+	d->tex_pos = (d->draw_start - HEIGHT / 2.0 + d->line_height / 2.0)
+		* d->step;
 	d->tex_x = calculate_tex_x(ray);
 }
 
@@ -70,7 +83,7 @@ void	draw_vertical_line(t_cub *cub, t_ray *ray, int x)
 	t_draw	d;
 	int		y;
 
-    init_draw_variables(&d, ray);
+	init_draw_variables(&d, ray);
 	y = -1;
 	while (++y < HEIGHT)
 	{
@@ -82,7 +95,8 @@ void	draw_vertical_line(t_cub *cub, t_ray *ray, int x)
 			if (d.tex_y > TEX_HEIGHT - 1)
 				d.tex_y = TEX_HEIGHT - 1;
 			d.tex_pos += d.step;
-			my_mlx_pixel_put(&cub->screen, x, y, get_wall_pixel_color(cub, ray, d.tex_x, d.tex_y));
+			my_mlx_pixel_put(&cub->screen, x, y,
+				get_wall_pixel_color(cub, ray, d.tex_x, d.tex_y));
 		}
 		else
 			my_mlx_pixel_put(&cub->screen, x, y, cub->floor_color);

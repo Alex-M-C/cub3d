@@ -6,7 +6,7 @@
 /*   By: alejandj <alejandj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/22 13:53:59 by alejandj          #+#    #+#             */
-/*   Updated: 2026/05/02 19:25:35 by alejandj         ###   ########.fr       */
+/*   Updated: 2026/05/05 19:24:38 by alejandj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,17 +42,17 @@ static void	init_cub(t_cub *cub)
 	cub->keys.right = 0;
 }
 
-static void load_texture(t_cub *cub, int index, char *path)
+static void	load_texture(t_cub *cub, int index, char *path)
 {
-	cub->textures[index].img_ptr = mlx_xpm_file_to_image(cub->mlx, path, 
-										&cub->textures[index].width, 
-										&cub->textures[index].height);
+	cub->textures[index].img_ptr = mlx_xpm_file_to_image(cub->mlx, path,
+			&cub->textures[index].width,
+			&cub->textures[index].height);
 	if (!cub->textures[index].img_ptr)
 		err_exit(cub, "Error\nFailed to load texture");
-	cub->textures[index].addr = mlx_get_data_addr(cub->textures[index].img_ptr, 
-										&cub->textures[index].bpp, 
-										&cub->textures[index].line_length, 
-										&cub->textures[index].endian);
+	cub->textures[index].addr = mlx_get_data_addr(cub->textures[index].img_ptr,
+			&cub->textures[index].bpp,
+			&cub->textures[index].line_length,
+			&cub->textures[index].endian);
 }
 
 /*
@@ -71,19 +71,16 @@ static void	run_game(t_cub *cub)
 		return ;
 	}
 	cub->screen.img_ptr = mlx_new_image(cub->mlx, WIDTH, HEIGHT);
-	cub->screen.addr = mlx_get_data_addr(cub->screen.img_ptr, 
-										&cub->screen.bpp, 
-										&cub->screen.line_length, 
-										&cub->screen.endian);
+	cub->screen.addr = mlx_get_data_addr(cub->screen.img_ptr,
+			&cub->screen.bpp,
+			&cub->screen.line_length,
+			&cub->screen.endian);
 	load_texture(cub, NO, cub->no_path);
 	load_texture(cub, SO, cub->so_path);
 	load_texture(cub, EA, cub->ea_path);
 	load_texture(cub, WE, cub->we_path);
 	ft_printf("Map and config loaded successfully! Starting game...\n");
-	//draw_2d_map(cub);
 	raycast_loop(cub);
-	
-	// Events
 	mlx_hook(cub->win, 2, 1L << 0, handle_key_press, cub);
 	mlx_hook(cub->win, 3, 1L << 1, handle_key_release, cub);
 	mlx_hook(cub->win, 17, 0, close_window, cub);

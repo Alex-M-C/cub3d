@@ -6,7 +6,7 @@
 /*   By: alejandj <alejandj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/22 13:53:50 by alejandj          #+#    #+#             */
-/*   Updated: 2026/04/24 13:49:05 by alejandj         ###   ########.fr       */
+/*   Updated: 2026/05/05 20:29:16 by alejandj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,20 +54,21 @@ static void	trim_newline(char *line)
 void	parse_file(int fd, t_cub *cub)
 {
 	char	*line;
-    int		map_ended;
+	int		map_ended;
 
-    map_ended = 0;
+	map_ended = 0;
 	cub->elements_found = 0;
 	line = get_next_line(fd);
 	while (line)
 	{
-        trim_newline(line);
+		trim_newline(line);
 		if (cub->elements_found < 6)
 		{
 			if (!is_empty_line(line) && !parse_element(line, cub))
 			{
 				free(line);
-				err_exit(cub, "Error\nInvalid element or map started too early");
+				err_exit(cub,
+					"Error\nInvalid element or map started too early");
 			}
 		}
 		else

@@ -15,6 +15,7 @@ SRCS		= src/main.c				\
 			  src/debug.c				\
 			  src/window.c				\
 			  src/events.c				\
+			  src/player_move.c			\
 			  src/raycast.c				\
 			  src/render.c				\
 			  src/render3d.c

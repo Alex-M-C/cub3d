@@ -6,7 +6,7 @@
 /*   By: alejandj <alejandj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/22 13:54:37 by alejandj          #+#    #+#             */
-/*   Updated: 2026/04/24 13:51:42 by alejandj         ###   ########.fr       */
+/*   Updated: 2026/05/05 19:25:01 by alejandj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /*
 ** Initialize player position and direction.
 */
-static void initialize_player(t_cub *cub, char player_c, int x, int y)
+static void	initialize_player(t_cub *cub, char player_c, int x, int y)
 {
 	if (player_c == 'N')
 	{
